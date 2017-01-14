@@ -186,3 +186,47 @@ function checkArticleType(parentTitle) {
 function specialSectionTypes() {
   return ['Tutorials','FAQ','Videos','Release Notes'];
 }
+
+function disableArticleComments() {
+  var noComments = $(".no-comments");
+  var articleComments = $(".article-comments");
+  if (noComments != null && noComments.length > 0) {
+    if (articleComments != null && articleComments.length > 0) {
+      articleComments.css("display", "none");
+      noComments.css("display", "none");
+    }
+  }
+}
+
+function loadSectionMenus() {
+  var target = $(".user-guide-nav-contents");
+  if (target != null && target.length > 0) {
+    var categoryId = getCategoryId();
+    var productMenu = getProductMenu(categoryId);
+    if (productMenu === '') {
+      $(".article-nav").css("display", "none");
+      $(".article-column").css("padding-left", "0px");
+    } else {
+      var ls = window.sessionStorage !== undefined;
+      if (ls && window.sessionStorage.getItem("categoryIndex") === null) {
+        createCategoryIndex();
+      }
+      var productCategories = getProductCategories(getProductMap()[categoryId]);
+      $(".product-selector").append(productMenu);
+      for (var i=0; i<productCategories.length; i++) {
+        var catId = productCategories[i];
+        getTree(catId).then(function(tree) {
+          $(target).append(renderTree(tree, catId)); 
+        });
+      }
+      $('.promoted-section').appendTo(target);
+    }
+  }
+}
+
+function triggerLeftNavInit() {
+  var target = $(".user-guide-nav-contents");
+  if (target != null && target.length > 0) {
+    initializeExpandCollapse(target);
+  }
+}
