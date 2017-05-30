@@ -2,7 +2,9 @@ function getProductMap() {
   return {
     "202726378":"Shotgun",
     "202866127":"Shotgun",
+    "115000022673":"Shotgun",
     "202981388":"Shotgun",
+    "115000024774":"Shotgun",
     "202726698":"Toolkit",
     "202726398":"Toolkit",
     "202726678":"Toolkit",

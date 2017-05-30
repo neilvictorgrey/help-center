@@ -2,14 +2,15 @@ function getCategoryMap() {
   return {
     "202726378":"Shotgun User Guide",
     "202866127":"Shotgun Admin Guide",
+    "115000022673":"Shotgun Developer Guide",
     "202981388":"Shotgun Troubleshooting",
+    "115000024774":"Release Notes",
     "202726698":"Toolkit User Guide",
     "202726398":"Toolkit Admin Guide",
     "202726678":"Toolkit Developer Guide",
     "202726668":"Toolkit Integrations",
     "114093982514": "RV Overview",
     "202726418":"RV User Guide",
-    /*"202704578":"RV Reference Guide",*/
     "202726408":"Studio Tools",
     "114093970474":"Shotgun Enterprise"
   };
@@ -147,4 +148,11 @@ function getProductCategories(productName) {
   } else {
     return categoryMap[productName];
   }
+}
+
+function toggleCategoryTree() {
+    $(".category-tree").on("click", "h2 a, h3 a", function() {
+        $(this).parent().nextAll().toggle();
+        return false;
+    })
 }

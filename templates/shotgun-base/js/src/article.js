@@ -184,7 +184,7 @@ function checkArticleType(parentTitle) {
 }
 
 function specialSectionTypes() {
-  return ['Tutorials','FAQ','Videos','Release Notes'];
+  return ['Tutorials','FAQ','Videos'];
 }
 
 function disableArticleComments() {
