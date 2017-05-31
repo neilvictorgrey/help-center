@@ -38,7 +38,7 @@ function getProductMenu(categoryId) {
 
   /* Replace this with index articles instead of categories */
   var menuType = "categories";
-  var menuOrder = ["202726378","115000022673","202726418"];
+  var menuOrder = ["202726378","202726418"];
   /* Studio */
   if (validateCategoryAccess("202726408")) {
       menuOrder.push("202726408");
@@ -53,9 +53,6 @@ function getProductMenu(categoryId) {
   for (var i=0; i<menuOrder.length; i++) {
     if (productMap.hasOwnProperty(menuOrder[i])) {
       productName = productMap[menuOrder[i]];
-      if (menuOrder[i] == "115000022673") {
-        productName = "Integrations";
-      }
       menuHtml += '<a href="https://support.shotgunsoftware.com/hc/en-us/' + menuType + '/' + menuOrder[i] + '" rel="nofollow" role="menuitem">' + productName + '</a>';
     }
   }
