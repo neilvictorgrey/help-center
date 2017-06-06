@@ -73,9 +73,9 @@ function getCategoryId() {
       url: sectionUrl,
       async: false,
       success: function(result) {
-      categoryId = result.section.category_id;
-    }
-           });
+        categoryId = result.section.category_id;
+      }
+    });
 
     if (pageType === "article") {
       articleIndex[pageId.toString()] = categoryId;

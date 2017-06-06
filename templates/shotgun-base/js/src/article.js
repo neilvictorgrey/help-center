@@ -41,31 +41,6 @@ function getTree(categoryId) {
   return defer;
 }
 
-function renderTree(sections, cId) {
-  var promotedSections = "";
-  var tree = $('<a class="user-guide-nav-title user-guide-nav-expand">'+getCategoryMap()[cId]+'</a>');
-  var articleListing = $('<div class="article-listing"></div>');
-  articleListing.append(sections.map(function(section) {
-    // We render promoted sections as their own major headings
-    if (specialSectionTypes().indexOf(section.name) >= 0) {
-      promotedSections += '<a class="user-guide-nav-title promoted-section" href="' + section.html_url + '">' + section.name + '</a>';
-      return;
-    }
-
-    var title = $('<div class="nav-section-title nav-title">' + section.name + '</div>');
-    var children = $('<ul class="nav-children"></ul>');
-    children.append(section.articles.map(function(article) {
-      return $('<li><a class="nav-article" href="' + article.html_url + '">' + article.name + '</a></li>');
-    }));
-
-    //bonus div, because...
-    return $("<div></div>").append([title, children]);
-  }));
-  tree = tree.add(articleListing);
-  tree = tree.add($(promotedSections));
-  return $("<div></div>").append(tree);
-}
-
 function collapseAllCategoryMenus(clicked) {
   var categoryTitles = $(".user-guide-nav-expand");
   categoryTitles.each(function() {
@@ -211,22 +186,86 @@ function loadSectionMenus() {
       if (ls && window.sessionStorage.getItem("categoryIndex") === null) {
         createCategoryIndex();
       }
-      var productCategories = getProductCategories(getProductMap()[categoryId]);
+
       $(".product-selector").append(productMenu);
-      for (var i=0; i<productCategories.length; i++) {
-        var catId = productCategories[i];
-        getTree(catId).then(function(tree) {
-          $(target).append(renderTree(tree, catId)); 
-        });
-      }
-      $('.promoted-section').appendTo(target);
+      renderCachedTree(target, categoryId);
     }
   }
 }
 
-function triggerLeftNavInit() {
-  var target = $(".user-guide-nav-contents");
-  if (target != null && target.length > 0) {
-    initializeExpandCollapse(target);
+function userTags() {
+  user_tags = HelpCenter.user.tags;
+  HelpCenter.user.organizations.forEach(function(org) {
+    org.tags.forEach(function(tag) {
+      user_tags.push(tag);
+    });
+  });
+  return user_tags;
+}
+
+function userCanSeeSection(section) {
+  user_tags = userTags();
+  if (HelpCenter.user.role=="anonymous" && section.viewable_by!="everybody") {
+    return false;
   }
+  section.tags.forEach(function(tag) {
+    if (!user_tags.includes(tag)) {
+      return false;
+    }
+  });
+  return true;
+}
+
+function sortedIds(objectList) {
+  ordered = {};
+  unordered = Object.keys(objectList);
+  for (var i=0; i<unordered.length; i++) {
+    ordered[objectList[unordered[i]].position] = unordered[i];
+  }
+  return ordered;
+}
+
+function renderCachedTree(target, categoryId) {
+
+  var productCategories = getProductCategories(getProductMap()[categoryId]);
+
+  url = "https://s3-us-west-2.amazonaws.com/shotgun-help-center/zd-menu-cache.json";
+  $.getJSON(url, function(zdmc) {
+
+    var promotedSections = "";
+    for (var cId=0; cId<productCategories.length; cId++) {
+      var tree = $('<a class="user-guide-nav-title user-guide-nav-expand">'+getCategoryMap()[productCategories[cId]]+'</a>');
+      var articleListing = $('<div class="article-listing"></div>');
+
+      //Object.keys(zdmc[productCategories[cId]]["sections"])
+      sectionIds = sortedIds(zdmc[productCategories[cId]]["sections"]);
+      //for (var sId=0; sId<Object.keys(sectionIds).length; sId++) {
+      Object.keys(sectionIds).forEach(function(sId) {
+        section = zdmc[productCategories[cId]]["sections"][sectionIds[sId]];
+        if (!userCanSeeSection(section)) {
+          return;
+        }
+        if (specialSectionTypes().indexOf(section.name) >= 0) {
+          promotedSections += '<a class="user-guide-nav-title promoted-section" href="' + section.html_url + '">' + section.name + '</a>';
+          return;
+        }
+
+        var title = $('<div class="nav-section-title nav-title">' + section.name + '</div>');
+        var children = $('<ul class="nav-children"></ul>');
+
+        articleIds = sortedIds(section["articles"]);
+        Object.keys(articleIds).forEach(function(aId) {
+          article = section["articles"][articleIds[aId]];
+          article_html = $('<li><a class="nav-article" href="' + article.html_url + '">' + article.name + '</a></li>');
+          children.append(article_html);
+        });
+        section_html = $("<div></div>").append([title, children]);
+        articleListing.append(section_html);
+      });
+      tree = tree.add(articleListing);
+      $(target).append($("<div></div>").append(tree));
+    }
+    $(target).append($(promotedSections));
+    initializeExpandCollapse(target);
+  });
 }
