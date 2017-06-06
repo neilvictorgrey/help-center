@@ -45,12 +45,12 @@ function getCategoryId() {
 
     var articleUrl = "/api/v2/help_center/articles/" + pageId;
     $.ajax({
-      url: articleUrl,
-      async: false,
-      success: function(result) {
-      sectionId = result.article.section_id;
-    }
-           });
+        url: articleUrl,
+        async: false,
+        success: function(result) {
+        sectionId = result.article.section_id;
+      }
+    });
 
   }
 
@@ -91,20 +91,27 @@ function getCategoryId() {
 function createCategoryIndex() {
   var categoriesUrl = "/api/v2/help_center/categories.json";
   var categoryIndex = [];
+  var idxName = getCategoryIndexName();
   $.get(categoriesUrl).then(function(result) {
     result.categories.forEach(function(category) {
       categoryIndex.push(category.id);
     });
-    window.sessionStorage.setItem("categoryIndex", JSON.stringify(categoryIndex));
+    window.sessionStorage.setItem(idxName, JSON.stringify(categoryIndex));
   });
   return categoryIndex;
+}
+
+function getCategoryIndexName() {
+  var idxName = "categoryIndex-" + HelpCenter.user.role;
+  return idxName;
 }
 
 function getCategoryIndex() {
   var ls = window.sessionStorage !== undefined;
   var categoryIndex = [];
-  if (ls !== false && window.sessionStorage.getItem("categoryIndex") !== null && window.sessionStorage.getItem("categoryIndex") !== "{}") {
-    categoryIndex = window.sessionStorage.getItem("categoryIndex");
+  var idxName = getCategoryIndexName();
+  if (ls !== false && window.sessionStorage.getItem(idxName) !== null && window.sessionStorage.getItem(idxName) !== "{}") {
+    categoryIndex = window.sessionStorage.getItem(idxName);
   } else {
     categoryIndex = createCategoryIndex();
   }
@@ -135,12 +142,7 @@ function getProductCategories(productName) {
   /* Sort according to category index */
   var sortedCategoryProductMap = [];
   var ls = window.sessionStorage !== undefined;
-  var categoryIndex = [];
-  if (ls && window.sessionStorage.getItem("categoryIndex") !== null && window.sessionStorage.getItem("categoryIndex") !== "{}") {
-    categoryIndex = JSON.parse(window.sessionStorage.getItem("categoryIndex"));
-  } else {
-    categoryIndex = createCategoryIndex();
-  }
+  var categoryIndex = getCategoryIndex();
   for (i=0; i<categoryIndex.length; i++) {
     if (categoryMap[productName].indexOf(categoryIndex[i].toString()) >= 0) {
       sortedCategoryProductMap.push(categoryIndex[i].toString());

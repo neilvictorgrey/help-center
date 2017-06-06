@@ -61,39 +61,3 @@ function getProductMenu(categoryId) {
   window.sessionStorage.setItem("productMenu", JSON.stringify(menuHtml));
   return menuHtml;
 }
-
-function getProductCategories(productName) {
-  var categoryMap = {};
-  var productMap = getProductMap();
-  for (var prod in productMap) {
-    if(productMap.hasOwnProperty(prod)) {
-      if (categoryMap.hasOwnProperty(productMap[prod])) {
-        categoryMap[productMap[prod]].push(prod);
-      } else {
-        categoryMap[productMap[prod]] = [prod];
-      }
-    }
-  }
-  
-  /* Sort according to category index */
-  var sortedCategoryProductMap = [];
-  var ls = window.sessionStorage !== undefined;
-  var categoryIndex = [];
-  if (ls && window.sessionStorage.getItem("categoryIndex") !== null && window.sessionStorage.getItem("categoryIndex") !== "{}") {
-    categoryIndex = JSON.parse(window.sessionStorage.getItem("categoryIndex"));
-  } else {
-    categoryIndex = createCategoryIndex();
-  }
-  for (i=0; i<categoryIndex.length; i++) {
-    if (categoryMap[productName].indexOf(categoryIndex[i].toString()) >= 0) {
-      sortedCategoryProductMap.push(categoryIndex[i].toString());
-    }
-  }
-  
-  /* Zendesk has crappy loading issues where we'll come back empty sometimes */
-  if (sortedCategoryProductMap != []) {
-    return sortedCategoryProductMap;
-  } else {
-    return categoryMap[productName];
-  }
-}

@@ -182,11 +182,6 @@ function loadSectionMenus() {
       $(".article-nav").css("display", "none");
       $(".article-column").css("padding-left", "0px");
     } else {
-      var ls = window.sessionStorage !== undefined;
-      if (ls && window.sessionStorage.getItem("categoryIndex") === null) {
-        createCategoryIndex();
-      }
-
       $(".product-selector").append(productMenu);
       renderCachedTree(target, categoryId);
     }
