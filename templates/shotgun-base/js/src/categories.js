@@ -100,7 +100,7 @@ function createCategoryIndex() {
   return categoryIndex;
 }
 
-function validateCategoryAccess(categoryId) {
+function getCategoryIndex() {
   var ls = window.sessionStorage !== undefined;
   var categoryIndex = [];
   if (ls !== false && window.sessionStorage.getItem("categoryIndex") !== null && window.sessionStorage.getItem("categoryIndex") !== "{}") {
@@ -108,6 +108,11 @@ function validateCategoryAccess(categoryId) {
   } else {
     categoryIndex = createCategoryIndex();
   }
+  return categoryIndex;
+}
+
+function validateCategoryAccess(categoryId) {
+  categoryIndex = getCategoryIndex();
   if (categoryIndex.indexOf(categoryId) >= 0) {
     return true;
   }
