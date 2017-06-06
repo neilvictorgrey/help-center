@@ -111,7 +111,7 @@ function getCategoryIndex() {
   var categoryIndex = [];
   var idxName = getCategoryIndexName();
   if (ls !== false && window.sessionStorage.getItem(idxName) !== null && window.sessionStorage.getItem(idxName) !== "{}") {
-    categoryIndex = window.sessionStorage.getItem(idxName);
+    categoryIndex = JSON.parse(window.sessionStorage.getItem(idxName));
   } else {
     categoryIndex = createCategoryIndex();
   }
@@ -138,10 +138,9 @@ function getProductCategories(productName) {
       }
     }
   }
-  
+
   /* Sort according to category index */
   var sortedCategoryProductMap = [];
-  var ls = window.sessionStorage !== undefined;
   var categoryIndex = getCategoryIndex();
   for (i=0; i<categoryIndex.length; i++) {
     if (categoryMap[productName].indexOf(categoryIndex[i].toString()) >= 0) {
