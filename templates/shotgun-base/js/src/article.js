@@ -1,46 +1,3 @@
-function getTree(categoryId) {
-  var defer = $.Deferred();
-  var ls = window.localStorage !== undefined;
-  var navbarSections = "navbar-sections-" + categoryId;
-
-  if (ls && window.localStorage.getItem(navbarSections) !== null) {
-    defer.resolve(JSON.parse(window.localStorage.getItem(navbarSections)));
-  }
-
-  var sectionsUrl = "/api/v2/help_center/categories/" + categoryId + "/sections.json";
-  $.get(sectionsUrl).then(function(result) {
-    var sections = [];
-    result.sections.forEach(function(section) {
-      sections.push({'id':section.id, 'html_url':section.html_url, 'name':section.name});
-    })
-    var promises = [];
-
-    sections.forEach(function(section) {
-      var promise = $.get("/api/v2/help_center/sections/" + section.id + "/articles.json").then(function(result) {
-        var articles = [];
-        result.articles.forEach(function(article) {
-          articles.push({'id':article.id, 'html_url':article.html_url, 'name':article.name});
-        });
-        section.articles = articles;
-      });
-
-      promises.push(promise);
-    });
-
-    $.when.apply($, promises).done(function() {
-      if (ls && window.localStorage.getItem(navbarSections) === null) {
-        defer.resolve(sections);
-      }
-
-      if (ls) {
-        window.localStorage.setItem(navbarSections, JSON.stringify(sections));
-      }
-    });
-  });
-
-  return defer;
-}
-
 function collapseAllCategoryMenus(clicked) {
   var categoryTitles = $(".user-guide-nav-expand");
   categoryTitles.each(function() {
@@ -78,14 +35,14 @@ function initializeExpandCollapse(target) {
   // Open the existing article, if there is one.
   if (articleTitle.length === 1) {
     var foundMenuItem = false;
-    articleTitle = articleTitle.html().trim();
+    articleTitle = articleTitle.text().trim();
 
     if (specialSectionTypes().indexOf(articleTitle) >= 0) {
       foundMenuItem = true;
     }
     if (foundMenuItem === false) {
       $(".nav-article").each(function() {
-        if ($(this).html().trim() === articleTitle) {
+        if ($(this).text().trim() === articleTitle) {
           $(this).parents(".nav-children").show();
           $(this).parents(".nav-children").siblings(".nav-section-title").attr("data-toggle-icon", "-");
           $(this).addClass("active-article");
@@ -97,7 +54,7 @@ function initializeExpandCollapse(target) {
     }
     if (foundMenuItem === false) {
       $(".nav-section-title").each(function() {
-        if ($(this).html().trim() === articleTitle) {
+        if ($(this).text().trim() === articleTitle) {
           $(this).parent().find(".nav-children").show();
           $(this).attr("data-toggle-icon", "-");
           $(this).closest(".article-listing").show();
@@ -108,18 +65,12 @@ function initializeExpandCollapse(target) {
     }
     if (foundMenuItem === false) {
       $(".user-guide-nav-title").each(function() {
-        if ($(this).html().trim() === articleTitle) {
+        if ($(this).text().trim() === articleTitle) {
           $(this).parent().find(".article-listing").show();
           $(this).parent().find(".user-guide-nav-expand").attr("data-toggle-icon", "-");
           foundMenuItem = true;
         }
       });
-    }
-
-    // If we can't find the article under this menu
-    // it means we have an invalid index.
-    if (foundMenuItem === false) {
-      invalidateIndexes();
     }
   }
   
