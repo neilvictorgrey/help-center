@@ -164,9 +164,11 @@ function userCanSeeSection(section) {
 
 function sortedIds(objectList) {
   ordered = {};
-  unordered = Object.keys(objectList);
-  for (var i=0; i<unordered.length; i++) {
-    ordered[objectList[unordered[i]].position] = unordered[i];
+  if (objectList != null) {
+    unordered = Object.keys(objectList);
+    for (var i=0; i<unordered.length; i++) {
+      ordered[objectList[unordered[i]].position] = unordered[i];
+    }
   }
   return ordered;
 }
