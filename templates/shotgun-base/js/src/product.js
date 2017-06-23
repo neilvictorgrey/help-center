@@ -12,6 +12,7 @@ function getProductMap() {
     "114093982514":"RV",
     "202726418":"RV",
     "202726408":"Studio",
+    "115000020413":"Shotgun Enterprise",
     "114093970474":"Shotgun Enterprise"
   };
 }
@@ -24,10 +25,16 @@ function getSelectedProduct(categoryId) {
   return '';
 }
 
+function getProductMenuIndexName() {
+  var idxName = "productMenu-" + HelpCenter.user.role;
+  return idxName;
+}
+
 function getProductMenu(categoryId) {
   var ls = window.sessionStorage !== undefined;
-  if (ls && window.sessionStorage.getItem("productMenu") !== null) {
-    $(".product-selector").append(JSON.parse(window.localStorage.getItem("productMenu")));
+  idxName = getProductMenuIndexName();
+  if (ls && window.sessionStorage.getItem(idxName) !== null) {
+    $(".product-selector").append(JSON.parse(window.localStorage.getItem(idxName)));
   }
 
   var productMap = getProductMap();
@@ -58,6 +65,6 @@ function getProductMenu(categoryId) {
   }
   menuHtml += '</span>'
 
-  window.sessionStorage.setItem("productMenu", JSON.stringify(menuHtml));
+  window.sessionStorage.setItem(idxName, JSON.stringify(menuHtml));
   return menuHtml;
 }

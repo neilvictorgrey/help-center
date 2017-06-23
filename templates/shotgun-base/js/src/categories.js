@@ -12,6 +12,7 @@ function getCategoryMap() {
     "114093982514": "RV Overview",
     "202726418":"RV User Guide",
     "202726408":"Studio Tools",
+    "115000020413": "Shotgun Enterprise - Docker",
     "114093970474":"Shotgun Enterprise"
   };
 }
