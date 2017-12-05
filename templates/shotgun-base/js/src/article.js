@@ -183,6 +183,7 @@ function renderCachedTree(target, categoryId, locale) {
 
     var promotedSections = "";
     for (var cId=0; cId<productCategories.length; cId++) {
+      if (!zdmc.hasOwnProperty(productCategories[cId])) { continue; }
       var tree = $('<a class="user-guide-nav-title user-guide-nav-expand">'+zdmc[productCategories[cId]]["name"]+'</a>');
       var articleListing = $('<div class="article-listing"></div>');
 
