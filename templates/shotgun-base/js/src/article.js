@@ -183,7 +183,7 @@ function renderCachedTree(target, categoryId, locale) {
 
     var promotedSections = "";
     for (var cId=0; cId<productCategories.length; cId++) {
-      var tree = $('<a class="user-guide-nav-title user-guide-nav-expand">'+getCategoryMap()[productCategories[cId]]+'</a>');
+      var tree = $('<a class="user-guide-nav-title user-guide-nav-expand">'+zdmc[productCategories[cId]]["name"]+'</a>');
       var articleListing = $('<div class="article-listing"></div>');
 
       //Object.keys(zdmc[productCategories[cId]]["sections"])
