@@ -172,7 +172,7 @@ function userCanSeeSection(section) {
   if (HelpCenter.user.role=="anonymous" && section.viewable_by!="everybody") {
     return false;
   }
-  if (section.get("user_segment_id", false)) {
+  if (section["user_segment_id"] != undefined) {
     section_tags = segmentTags()[section.id]
     section_tags.forEach(function(tag) {
       if (!user_tags.includes(tag)) {
