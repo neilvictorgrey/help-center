@@ -150,16 +150,36 @@ function userTags() {
   return user_tags;
 }
 
+function segmentTags() {
+  var user_segments = {};
+  var segment_tags = {};
+  var segmentsUrl = "/api/v2/help_center/user_segments.json";
+  $.ajax({
+    url: segmentsUrl,
+    async: false,
+    success: function(result) {
+      user_segments = result.user_segments;
+      user_segments.forEach(function(segment) {
+        segment_tags[segment["id"]] = segment["tags"];
+      });
+    }
+  });
+  return segment_tags;
+}
+
 function userCanSeeSection(section) {
   user_tags = userTags();
   if (HelpCenter.user.role=="anonymous" && section.viewable_by!="everybody") {
     return false;
   }
-  section.tags.forEach(function(tag) {
-    if (!user_tags.includes(tag)) {
-      return false;
-    }
-  });
+  if (section.get("user_segment_id", false)) {
+    section_tags = segmentTags()[section.id]
+    section_tags.forEach(function(tag) {
+      if (!user_tags.includes(tag)) {
+        return false;
+      }
+    });
+  }
   return true;
 }
 
