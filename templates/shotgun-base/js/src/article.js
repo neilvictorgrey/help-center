@@ -212,6 +212,7 @@ function renderCachedTree(target, categoryId, locale) {
       //for (var sId=0; sId<Object.keys(sectionIds).length; sId++) {
       Object.keys(sectionIds).forEach(function(sId) {
         section = zdmc[productCategories[cId]]["sections"][sectionIds[sId]];
+        section["id"] = sID;
         if (!userCanSeeSection(section)) {
           return;
         }
