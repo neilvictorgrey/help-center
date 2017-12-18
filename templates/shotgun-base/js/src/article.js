@@ -173,12 +173,14 @@ function userCanSeeSection(section) {
     return false;
   }
   if (section["user_segment_id"] != undefined) {
-    section_tags = segmentTags()[section.id]
-    section_tags.forEach(function(tag) {
-      if (!user_tags.includes(tag)) {
-        return false;
-      }
-    });
+    section_tags = segmentTags()[section.id];
+    if (section_tags != undefined) {
+      section_tags.forEach(function(tag) {
+        if (!user_tags.includes(tag)) {
+          return false;
+        }
+      });
+    }
   }
   return true;
 }
