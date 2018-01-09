@@ -141,13 +141,13 @@ function loadSectionMenus(locale) {
 }
 
 function userTags() {
-  user_tags = HelpCenter.user.tags
+  var user_tags = (HelpCenter.user.tags === undefined) ? [] : HelpCenter.user.tags;
   HelpCenter.user.organizations.forEach(function(org) {
     org.tags.forEach(function(tag) {
       user_tags.push(tag);
     });
   });
-  return user_tags.filter(function (x, i, a) { return a.indexOf(x) == i; });;
+  return user_tags.filter(function (x, i, a) { return a.indexOf(x) == i; });
 }
 
 function segmentTags() {
