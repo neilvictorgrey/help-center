@@ -141,13 +141,13 @@ function loadSectionMenus(locale) {
 }
 
 function userTags() {
-  user_tags = HelpCenter.user.tags;
+  user_tags = HelpCenter.user.tags
   HelpCenter.user.organizations.forEach(function(org) {
     org.tags.forEach(function(tag) {
       user_tags.push(tag);
     });
   });
-  return user_tags;
+  return user_tags.filter(function (x, i, a) { return a.indexOf(x) == i; });;
 }
 
 function segmentTags() {
@@ -169,8 +169,8 @@ function segmentTags() {
 
 function userCanSeeSection(section) {
   user_tags = userTags();
-  if (HelpCenter.user.role=="anonymous" && section.viewable_by!="everybody") {
-    return false;
+  if (HelpCenter.user.role=="anonymous") {
+    user_tags = [];
   }
   if (section["user_segment_id"] != undefined) {
     section_tags = segmentTags()[section.id];

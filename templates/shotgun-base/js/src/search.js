@@ -8,12 +8,12 @@ function search() {
 
 // Custom search placeholder text
 function setSearchPlaceholder() {
-  $('.st-default-search-input').attr('placeholder','Find anything (like tutorials, time logs, or task templates)');
+  $('.st-default-search-input').attr('placeholder', i18n("find-anything","en-us"));
 }
 
 function setRequestsPlaceholder() {
   if (getPageType() === "request-list") {
-    $('.requests-search').attr("placeholder", "Search Requests...");
+    $('.requests-search').attr("placeholder", i18n("search-requests","en-us"));
   }
 }
 
@@ -61,7 +61,7 @@ function searchCallback() {
     searchContainer.css("display", "none");
     $(".docs-nav").css("display", "table-cell");
     $(".search-table").css("width", "0");
-          $("#user-nav-search").css("width", "36px");
+    $("#user-nav-search").css("width", "36px");
   }
   
 }
