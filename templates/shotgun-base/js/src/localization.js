@@ -1,6 +1,13 @@
 function userLocale() {
   var locale = HelpCenter.user.locale;
-  if (locale === undefined) { locale = "en-us"; }
+  if (locale === undefined) {
+    urlParts = window.location.href.split("/");
+    if (urlParts[3] === "hc") {
+      locale = urlParts[4].split("?")[0].split("#")[0];
+    } else {
+      locale = "en-us";
+    }
+  }
   return locale;
 }
 
