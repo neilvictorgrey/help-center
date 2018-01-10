@@ -8,12 +8,12 @@ function search() {
 
 // Custom search placeholder text
 function setSearchPlaceholder() {
-  $('.st-default-search-input').attr('placeholder', i18n("find-anything","en-us"));
+  $('.st-default-search-input').attr('placeholder', i18n("find-anything"));
 }
 
 function setRequestsPlaceholder() {
   if (getPageType() === "request-list") {
-    $('.requests-search').attr("placeholder", i18n("search-requests","en-us"));
+    $('.requests-search').attr("placeholder", i18n("search-requests"));
   }
 }
 

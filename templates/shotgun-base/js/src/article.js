@@ -124,8 +124,7 @@ function disableArticleComments() {
   }
 }
 
-function loadSectionMenus(locale) {
-  if (locale === undefined) { locale = "en-us"; }
+function loadSectionMenus() {
   var target = $(".user-guide-nav-contents");
   if (target != null && target.length > 0) {
     var categoryId = getCategoryId();
@@ -135,7 +134,7 @@ function loadSectionMenus(locale) {
       $(".article-column").css("padding-left", "0px");
     } else {
       $(".product-selector").append(productMenu);
-      renderCachedTree(target, categoryId, locale);
+      renderCachedTree(target, categoryId);
     }
   }
 }
@@ -196,11 +195,11 @@ function sortedIds(objectList) {
   return ordered;
 }
 
-function renderCachedTree(target, categoryId, locale) {
-
+function renderCachedTree(target, categoryId) {
+  
   var productCategories = getProductCategories(getProductMap()[categoryId]);
 
-  url = "https://s3-us-west-2.amazonaws.com/shotgun-help-center/zd-menu-cache." + locale + ".json";
+  url = "https://s3-us-west-2.amazonaws.com/shotgun-help-center/zd-menu-cache." + userLocale() + ".json";
   $.getJSON(url, function(zdmc) {
 
     var promotedSections = "";

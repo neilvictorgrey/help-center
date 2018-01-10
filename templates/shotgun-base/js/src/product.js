@@ -56,7 +56,7 @@ function getProductMenu(categoryId) {
   for (var i=0; i<menuOrder.length; i++) {
     if (productMap.hasOwnProperty(menuOrder[i])) {
       productName = productMap[menuOrder[i]];
-      menuHtml += '<a href="https://support.shotgunsoftware.com/hc/en-us/' + menuType + '/' + menuOrder[i] + '" rel="nofollow" role="menuitem">' + productName + '</a>';
+      menuHtml += '<a href="https://support.shotgunsoftware.com/hc/' + userLocale() + '/' + menuType + '/' + menuOrder[i] + '" rel="nofollow" role="menuitem">' + productName + '</a>';
     }
   }
   menuHtml += '</span>'
