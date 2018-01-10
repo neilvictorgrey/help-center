@@ -4,6 +4,11 @@ function userLocale() {
   return locale;
 }
 
+function baseURL() {
+  var zdURL = "https://support.shotgunsoftware.com/hc/" + userLocale() + "/";
+  return zdURL;
+}
+
 // localization strings
 function i18n(key, locale) {
   var translations = {
