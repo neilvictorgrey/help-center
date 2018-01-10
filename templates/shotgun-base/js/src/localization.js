@@ -24,6 +24,11 @@ function i18n(key, locale) {
       "ja": "アクション",
       "zh-cn": "动作",
     },
+    "enterprise": {
+      "en-us": "Enterprise",
+      "ja": "エンタープライズ",
+      "zh-cn": "企业"
+    },
     "find-anything": {
       "en-us": "Find anything (like tutorials, time logs, or task templates)",
       "ja": "検索語句を入力(チュートリアル、時間ログ、タスク テンプレートなど)",
@@ -63,6 +68,11 @@ function i18n(key, locale) {
       "en-us": "Sign In",
       "ja": "サインイン",
       "zh-cn": "登录"
+    },
+    "studio": {
+      "en-us": "Studio",
+      "ja": "スタジオ",
+      "zh-cn": "工作室 "
     },
     "submit-a-new-request": {
       "en-us": "Submit A New Request",
