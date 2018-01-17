@@ -24,6 +24,16 @@ function i18n(key, locale) {
       "ja": "アクション",
       "zh-cn": "动作",
     },
+    "client-priority": {
+      "en-us": "Client Priority",
+      "ja": "クライアントの優先順位",
+      "zh-cn": "客户优先级",
+    },
+    "detailed-status": {
+      "en-us": "Detailed Status",
+      "ja": "詳細ステータス",
+      "zh-cn": "详细状态",
+    },
     "enterprise": {
       "en-us": "Enterprise",
       "ja": "エンタープライズ",
