@@ -65,7 +65,7 @@ function enableActionsMenu() {
       $('.activities-request-new-btn').text(i18n("submit-a-new-request"));
     }
     if (HelpCenter.user.organizations.length > 0) {
-      var listitem = '<li><a href="requests/organization">' + i18n("organization-requests") + '</a></li>';
+      var listitem = '<li><a href="' + baseURL() + 'requests/organization">' + i18n("organization-requests") + '</a></li>';
       $(listitem).appendTo('.activities-request-groups');
     }
   }
