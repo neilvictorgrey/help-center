@@ -97,7 +97,7 @@ function initializeExpandCollapse(target) {
       $(this).attr("data-toggle-icon", "-");
     }
   });
-} 
+}
 
 function checkArticleType(parentTitle) {
   var articleElement = $("#article-type");
@@ -110,7 +110,7 @@ function checkArticleType(parentTitle) {
 }
 
 function specialSectionTypes() {
-  return ['Tutorials','FAQ','Videos'];
+  return [i18n('tutorials'),i18n('faq'),i18n('videos')];
 }
 
 function disableArticleComments() {

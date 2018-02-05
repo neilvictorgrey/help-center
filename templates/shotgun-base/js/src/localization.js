@@ -39,6 +39,11 @@ function i18n(key, locale) {
       "ja": "エンタープライズ",
       "zh-cn": "企业"
     },
+    "faq": {
+      "en-us": "FAQ",
+      "ja": "FAQ",
+      "zh-cn": "常见问题解答"
+    },
     "find-anything": {
       "en-us": "Find anything (like tutorials, time logs, or task templates)",
       "ja": "検索語句を入力(チュートリアル、時間ログ、タスク テンプレートなど)",
@@ -93,6 +98,16 @@ function i18n(key, locale) {
       "en-us": "Submit A Request",
       "ja": "リクエストを送信",
       "zh-cn": "提交请求"
+    },
+    "tutorials": {
+      "en-us": "Tutorials",
+      "ja": "チュートリアル",
+      "zh-cn": "教程"
+    },
+    "videos": {
+      "en-us": "Videos",
+      "ja": "ビデオ",
+      "zh-cn": "视频"
     }
   }
 
