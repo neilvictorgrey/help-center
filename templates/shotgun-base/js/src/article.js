@@ -150,6 +150,9 @@ function userTags() {
 }
 
 function segmentTags() {
+  if (window.global_segments !== undefined) {
+    return JSON.parse(window.global_segments);
+  }
   var user_segments = {};
   var segment_tags = {};
   var segmentsUrl = "/api/v2/help_center/user_segments.json";
@@ -163,6 +166,7 @@ function segmentTags() {
       });
     }
   });
+  window.global_segments = JSON.stringify(segment_tags);
   return segment_tags;
 }
 
