@@ -203,7 +203,7 @@ function renderCachedTree(target, categoryId) {
   
   var productCategories = getProductCategories(getProductMap()[categoryId]);
 
-  url = "https://s3-us-west-2.amazonaws.com/shotgun-help-center/zd-menu-cache." + userLocale() + ".json";
+  var url = "https://s3-us-west-2.amazonaws.com/shotgun-help-center/zd-menu-cache." + userLocale() + ".json";
   $.getJSON(url, function(zdmc) {
 
     var promotedSections = "";
@@ -212,11 +212,12 @@ function renderCachedTree(target, categoryId) {
       var tree = $('<a class="user-guide-nav-title user-guide-nav-expand">'+zdmc[productCategories[cId]]["name"]+'</a>');
       var articleListing = $('<div class="article-listing"></div>');
 
-      //Object.keys(zdmc[productCategories[cId]]["sections"])
-      sectionIds = sortedIds(zdmc[productCategories[cId]]["sections"]);
-      //for (var sId=0; sId<Object.keys(sectionIds).length; sId++) {
+      var sectionIds = sortedIds(zdmc[productCategories[cId]]["sections"]);
       Object.keys(sectionIds).forEach(function(sId) {
-        section = zdmc[productCategories[cId]]["sections"][sectionIds[sId]];
+        var section = zdmc[productCategories[cId]]["sections"][sectionIds[sId]];
+        var articleIds = sortedIds(section["articles"]);
+        if (articleIds === {}) { return; }
+
         section["id"] = sId;
         if (!userCanSeeSection(section)) {
           return;
@@ -229,13 +230,13 @@ function renderCachedTree(target, categoryId) {
         var title = $('<div class="nav-section-title nav-title">' + section.name + '</div>');
         var children = $('<ul class="nav-children"></ul>');
 
-        articleIds = sortedIds(section["articles"]);
+
         Object.keys(articleIds).forEach(function(aId) {
-          article = section["articles"][articleIds[aId]];
-          article_html = $('<li><a class="nav-article" href="' + article.html_url + '">' + article.name + '</a></li>');
+          var article = section["articles"][articleIds[aId]];
+          var article_html = $('<li><a class="nav-article" href="' + article.html_url + '">' + article.name + '</a></li>');
           children.append(article_html);
         });
-        section_html = $("<div></div>").append([title, children]);
+        var section_html = $("<div></div>").append([title, children]);
         articleListing.append(section_html);
       });
       tree = tree.add(articleListing);
