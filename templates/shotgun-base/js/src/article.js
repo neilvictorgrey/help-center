@@ -133,7 +133,8 @@ function loadSectionMenus() {
       $(".article-nav").css("display", "none");
       $(".article-column").css("padding-left", "0px");
     } else {
-      $(".product-selector").append(productMenu);
+      $(".product-selector").html(productMenu);
+      $(target).html("");
       renderCachedTree(target, categoryId);
     }
   }
@@ -216,7 +217,7 @@ function renderCachedTree(target, categoryId) {
       Object.keys(sectionIds).forEach(function(sId) {
         var section = zdmc[productCategories[cId]]["sections"][sectionIds[sId]];
         var articleIds = sortedIds(section["articles"]);
-        if (articleIds === {}) { return; }
+        if (Object.keys(articleIds).length === 0) { return; }
 
         section["id"] = sId;
         if (!userCanSeeSection(section)) {
