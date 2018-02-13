@@ -5,7 +5,8 @@ function userLocale() {
   var locale;
   if (typeof HelpCenter !== "undefined") {
     locale = HelpCenter.user.locale;
-  } else {
+  }
+  if (typeof locale === "undefined") {
     urlParts = window.location.href.split("/");
     if (urlParts[3] === "hc") {
       locale = urlParts[4].split("?")[0].split("#")[0];
