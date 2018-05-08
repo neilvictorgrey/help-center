@@ -9,7 +9,8 @@ function getProductMap() {
     "202726418":"RV",
     "202726408":"Studio",
     "115000020413":"Shotgun Enterprise",
-    "114093970474":"Shotgun Enterprise"
+    "114093970474":"Shotgun Enterprise",
+    "360000337333":"Automotive"
   };
 }
 
@@ -49,6 +50,10 @@ function getProductMenu(categoryId) {
   /* SEC */
   if (validateCategoryAccess("114093970474")) {
       menuOrder.push("114093970474");
+  }
+  /* Automotive */
+  if (validateCategoryAccess("360000337333")) {
+      menuOrder.push("360000337333");
   }
   
   menuHtml = '<a class="dropdown-toggle product-selected-item">' + selectedProduct + '</a>';

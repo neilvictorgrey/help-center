@@ -31,6 +31,11 @@ function i18n(key, locale) {
       "ja": "アクション",
       "zh-cn": "动作",
     },
+    "automotive": {
+      "en-us": "Automotive",
+      "ja": "Automotive",
+      "zh-cn": "Automotive",
+    },
     "client-priority": {
       "en-us": "Client Priority",
       "ja": "クライアントの優先順位",
