@@ -44,15 +44,15 @@ function getProductMenu(categoryId) {
   var menuType = "categories";
   var menuOrder = ["202726378","202726418"];
   /* Studio */
-  if (validateCategoryAccess("202726408")) {
+  if (validateCategoryAccess(202726408)) {
       menuOrder.push("202726408");
   }
   /* SEC */
-  if (validateCategoryAccess("114093970474")) {
+  if (validateCategoryAccess(114093970474)) {
       menuOrder.push("114093970474");
   }
   /* Automotive */
-  if (validateCategoryAccess("360000337333")) {
+  if (validateCategoryAccess(360000337333)) {
       menuOrder.push("360000337333");
   }
   
