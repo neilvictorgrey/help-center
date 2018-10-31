@@ -3,6 +3,7 @@ function getCategoryMap() {
     "202726378":"Shotgun User Guide",
     "202866127":"Shotgun Admin Guide",
     "115000022673":"Shotgun Developer Guide",
+    "360001044954":"Shotgun Create (Open Beta)",
     "202981388":"Shotgun Troubleshooting",
     "115000024774":"Release Notes",
     "114093982514": "RV Overview",
@@ -95,6 +96,8 @@ function createCategoryIndex() {
       categoryIndex.push(category.id);
     });
     window.sessionStorage.setItem(idxName, JSON.stringify(categoryIndex));
+    // Reload the left-nav, since it probably isn't visible yet.
+    loadSectionMenus();
   });
   return categoryIndex;
 }
@@ -110,7 +113,8 @@ function getCategoryIndex() {
   var idxName = getCategoryIndexName();
   if (ls !== false && window.sessionStorage.getItem(idxName) !== null && window.sessionStorage.getItem(idxName) !== "{}") {
     categoryIndex = JSON.parse(window.sessionStorage.getItem(idxName));
-  } else {
+  } else if (window.sessionStorage.getItem(idxName+"Generate") == null) {
+    window.sessionStorage.setItem(idxName+"Generate","true");
     categoryIndex = createCategoryIndex();
   }
   return categoryIndex;

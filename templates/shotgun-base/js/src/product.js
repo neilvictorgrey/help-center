@@ -5,6 +5,7 @@ function getProductMap() {
     "115000022673":"Shotgun",
     "202981388":"Shotgun",
     "115000024774":"Shotgun",
+    "360001044954":"Shotgun",
     "114093982514":"RV",
     "202726418":"RV",
     "202726408":"Studio",
@@ -49,7 +50,7 @@ function getProductMenu(categoryId) {
   }
   /* SEC */
   if (validateCategoryAccess(114093970474)) {
-      menuOrder.push("114093970474");
+      menuOrder.push("115000020413");
   }
   /* Automotive */
   if (validateCategoryAccess(360000337333)) {
