@@ -171,15 +171,15 @@ function segmentTags() {
   return segment_tags;
 }
 
-function userCanSeeSection(section) {
+function userCanSeeArticle(article) {
   user_tags = userTags();
   if (HelpCenter.user.role=="anonymous") {
     user_tags = [];
   }
-  if (section["user_segment_id"] != undefined) {
-    section_tags = segmentTags()[section.id];
-    if (section_tags != undefined) {
-      section_tags.forEach(function(tag) {
+  if (article["user_segment_id"] != undefined) {
+    article_tags = segmentTags()[article.id];
+    if (article_tags != undefined) {
+      article_tags.forEach(function(tag) {
         if (!user_tags.includes(tag)) {
           return false;
         }
@@ -220,9 +220,6 @@ function renderCachedTree(target, categoryId) {
         if (Object.keys(articleIds).length === 0) { return; }
 
         section["id"] = sId;
-        if (!userCanSeeSection(section)) {
-          return;
-        }
         if (specialSectionTypes().indexOf(section.name) >= 0) {
           promotedSections += '<a class="user-guide-nav-title promoted-section" href="' + section.html_url + '">' + section.name + '</a>';
           return;
@@ -231,12 +228,17 @@ function renderCachedTree(target, categoryId) {
         var title = $('<div class="nav-section-title nav-title">' + section.name + '</div>');
         var children = $('<ul class="nav-children"></ul>');
 
-
+        var addedArticles = 0;
         Object.keys(articleIds).forEach(function(aId) {
           var article = section["articles"][articleIds[aId]];
-          var article_html = $('<li><a class="nav-article" href="' + article.html_url + '">' + article.name + '</a></li>');
-          children.append(article_html);
+          if (userCanSeeArticle(article)) {
+            var article_html = $('<li><a class="nav-article" href="' + article.html_url + '">' + article.name + '</a></li>');
+            children.append(article_html);
+            addedArticles += 1;
+          }
         });
+        if (addedArticles=== 0) { return; }
+
         var section_html = $("<div></div>").append([title, children]);
         articleListing.append(section_html);
       });
